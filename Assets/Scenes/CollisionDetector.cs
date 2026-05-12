@@ -14,21 +14,18 @@ public class CollisionDetector : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.tag == "Coin")
-        {
+
             currentCollider = collision.gameObject;
             print($"Collided with {currentCollider.name}");
-        }
+  
     }
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Coin")
-        {
+
             print($"Stopped colliding with {currentCollider.name}");
             currentCollider = null;
 
-        }
 
     }
 
