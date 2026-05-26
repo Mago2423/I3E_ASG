@@ -1,14 +1,14 @@
 using UnityEngine;
-
+using UnityEngine.UIElements;
 public class Door : MonoBehaviour
 {
-    public Vector3 rotateAmount = new Vector3(0, 90f, 0);
+    public Vector3 rotateAmount = new Vector3(0, 90, 0);
     bool isOpen = false;
-    public void Interact()
+    public int Interact()
     {
-        if (!isOpen) transform.Rotate(rotateAmount);
-        else transform.Rotate(rotateAmount * -1);
-
+        var animator = GetComponent<Animator>();
+        animator.SetBool("IsOpen", isOpen);
         isOpen = !isOpen;
+        return 0;
     }
 }
