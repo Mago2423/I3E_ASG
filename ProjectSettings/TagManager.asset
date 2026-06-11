@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - Flag
   - Item
+  - Locked
   layers:
   - Default
   - TransparentFX
