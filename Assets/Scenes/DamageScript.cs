@@ -3,27 +3,50 @@ using UnityEngine;
 public class DamageScript : MonoBehaviour
 {
     public int damageAmount = 10;
+    int time = 100;
+    CollisionDetector player;
+    bool isColliding = false;
     public UIManagerScript UIManagerScript;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void OnCollisionEnter(Collision collision)
+
+
+    void OnCollisionStay(Collision collision)
     {
-        var player = collision.gameObject.GetComponent<CollisionDetector>();
-        if (player != null)
+        if (!isColliding) return;
+        
+        player = collision.gameObject.GetComponent<CollisionDetector>();
+        if (player == null) return;
+        
+        time -= 1;
+        if (time <= 0)
         {
             var audio = GetComponent<AudioSource>();
             audio.Play();
             print($"Player took {damageAmount} damage");
-            player.Health -= damageAmount;
-            UIManagerScript.UpdateHealth(player.Health);
+            player.health -= damageAmount;
+            UIManagerScript.UpdateHealth(player.health);
 
-            int health = player.Health;
-            if (health <= 0)
+            if (player.health <= 0)
             {
                 print("Game Over");
-                health = 0;
-                UIManagerScript.UpdateHealth(health);
                 UIManagerScript.Gameover();
             }
+            time = 100;
         }
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void OnCollisionEnter(Collision collision)
+    {
+        isColliding = true;
+        player = collision.gameObject.GetComponent<CollisionDetector>();
+        var audio = GetComponent<AudioSource>();
+        audio.Play();
+        print($"Player took {damageAmount} damage");
+        player.health -= damageAmount;
+        UIManagerScript.UpdateHealth(player.health);
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        isColliding = false;
     }
 }

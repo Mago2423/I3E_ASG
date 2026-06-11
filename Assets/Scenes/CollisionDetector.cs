@@ -10,13 +10,7 @@ public class CollisionDetector : MonoBehaviour
     public int scoreIncrement = 1; //unity overights this value
 
     int score = 0;
-    int health = 100;
-
-    public int Health
-    {
-        get { return health; }
-        set {health = value; }
-    }
+    public int health = 100;
 
     GameObject currentCollider;
     

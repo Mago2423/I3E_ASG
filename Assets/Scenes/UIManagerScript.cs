@@ -36,6 +36,13 @@ public class UIManagerScript : MonoBehaviour
     public void UpdateScore(int score)
     {
         ScoreText.text = $"Score: {score}";
+        if (score >= 10)
+        {
+            print("You Win!");
+            GameOver.text = "You Win!";
+            StartButton.gameObject.SetActive(false);
+            TogglePanel();
+        }
     }
 
     public void UpdateHealth(int health)
