@@ -7,8 +7,15 @@ public class Door : MonoBehaviour
     public int Interact()
     {
         var animator = GetComponent<Animator>();
-        animator.SetBool("IsOpen", isOpen);
         isOpen = !isOpen;
+        animator.SetBool("IsOpen", isOpen);
+        return 0;
+    }
+    public int Close()
+    {
+        var animator = GetComponent<Animator>();
+        isOpen = false;
+        animator.SetBool("IsOpen", isOpen);
         return 0;
     }
 }
