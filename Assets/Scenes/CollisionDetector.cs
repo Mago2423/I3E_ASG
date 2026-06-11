@@ -84,13 +84,23 @@ public class CollisionDetector : MonoBehaviour
             var Door = currentCollider.GetComponent<Door>();
             if (Door != null)
             {
-                print($"Interacted with {currentCollider.name}");
-                Door.Interact();
-            }
-            else
-            {
-                print($"Stopped interacting with {currentCollider.name}");
-                Door.Close();
+                if (currentCollider.CompareTag("Locked"))
+                {
+                    if (ItemsCollected >= 10)
+                    {
+                        print("Door is now unlocked!");
+                    }
+                    else
+                    {
+                        print("Door is locked. Collect all items to unlock.");
+                        return; // Exit the method to prevent interaction with the door
+                    }
+                }
+                else
+                {
+                    print($"Interacted with {currentCollider.name}");
+                    Door.Interact();
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     int time = 1000;
     bool isColliding = false;
 
+
     void Update()
     {
         if (!isColliding && isOpen)
