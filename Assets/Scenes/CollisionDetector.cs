@@ -12,6 +12,8 @@ public class CollisionDetector : MonoBehaviour
     int score = 0;
     public int health = 100;
 
+    public int ItemsCollected = 0;
+
     GameObject currentCollider;
     
     bool isMenuShowing = false;
@@ -35,7 +37,26 @@ public class CollisionDetector : MonoBehaviour
     void OnInteract(InputValue value)
     {
         print("Interacted");
-        if (currentCollider != null)
+        if (currentCollider != null && currentCollider.CompareTag("Item"))
+        {
+            var Collectible = currentCollider.GetComponent<Collectible>();
+            if (Collectible != null)
+            {
+                var collider = Collectible.GetComponent<Collider>();
+                if(collider != null && !collider.enabled)
+                {
+                    print($"Already collected {currentCollider.name}");
+                }
+                else
+                {
+                    print($"Interacted with {currentCollider.name}");
+                    ItemsCollected += 1;
+                    Collectible.Collect();
+                    UIManagerScript.ItemCollected(ItemsCollected);
+                }
+            }
+        }
+        else if (currentCollider != null)
         {
             print($"Interacted with {currentCollider.name}");
             var Collectible = currentCollider.GetComponent<Collectible>();
@@ -54,6 +75,7 @@ public class CollisionDetector : MonoBehaviour
                     Collectible.Collect();
                     UIManagerScript.UpdateScore(score);
                 }
+            
             }
             var Door = currentCollider.GetComponent<Door>();
             if (Door != null)

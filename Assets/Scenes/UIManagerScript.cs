@@ -10,6 +10,7 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text HealthText;
     public TMP_Text GameOver;
     public Button StartButton;
+    public TMP_Text ItemText;
     
     public GameObject MenuPanel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,6 +18,7 @@ public class UIManagerScript : MonoBehaviour
     {
         ScoreText.text = "Score: 0";
         HealthText.text = "Health: 100";
+        ItemText.text = "Items Collected: 0";
         GameOver.text = "Game";
         StartButton.gameObject.SetActive(true);
 
@@ -36,19 +38,23 @@ public class UIManagerScript : MonoBehaviour
     public void UpdateScore(int score)
     {
         ScoreText.text = $"Score: {score}";
-        if (score >= 10)
+    }
+
+    public void UpdateHealth(int health)
+    {
+        HealthText.text = $"Health: {health}";
+    }
+
+    public void ItemCollected(int collected)
+    {
+        ItemText.text = $"Items Collected: {collected}/10";
+        if (collected >= 10)
         {
             print("You Win!");
             GameOver.text = "You Win!";
             StartButton.gameObject.SetActive(false);
             TogglePanel();
         }
-    }
-
-    public void UpdateHealth(int health)
-    {
-        HealthText.text = $"Health: {health}";
-        
     }
 
     public void TogglePanel()
