@@ -14,6 +14,8 @@ public class CollisionDetector : MonoBehaviour
 
     public int ItemsCollected = 0;
 
+    public int CoinsCollected = 0;
+
     GameObject currentCollider;
     
     bool isMenuShowing = false;
@@ -70,10 +72,12 @@ public class CollisionDetector : MonoBehaviour
                 else
                 {
                     print($"Interacted with {currentCollider.name}");
+                    CoinsCollected += 1;
                     score += Collectible.score;
                     print($"Score: {score}");
                     Collectible.Collect();
                     UIManagerScript.UpdateScore(score);
+                    UIManagerScript.CoinsCollected(CoinsCollected);
                 }
             
             }

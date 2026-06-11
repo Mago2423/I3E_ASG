@@ -11,7 +11,7 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text GameOver;
     public Button StartButton;
     public TMP_Text ItemText;
-    
+    public TMP_Text CoinsText;
     public GameObject MenuPanel;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,6 +19,7 @@ public class UIManagerScript : MonoBehaviour
         ScoreText.text = "Score: 0";
         HealthText.text = "Health: 100";
         ItemText.text = "Items Collected: 0";
+        CoinsText.text = "Coins Collected: 0";
         GameOver.text = "Game";
         StartButton.gameObject.SetActive(true);
 
@@ -53,6 +54,17 @@ public class UIManagerScript : MonoBehaviour
             print("You Win!");
             GameOver.text = "You Win!";
             StartButton.gameObject.SetActive(false);
+            TogglePanel();
+        }
+    }
+
+    public void CoinsCollected(int CoinsCollected)
+    {
+        CoinsText.text = $"Coins Collected: {CoinsCollected}/10";
+        if (CoinsCollected >= 10)
+        {
+            print("You have collected all the coins!");
+            GameOver.text = "You have collected all the coins!";
             TogglePanel();
         }
     }
