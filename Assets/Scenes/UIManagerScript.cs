@@ -13,6 +13,7 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text ItemText;
     public TMP_Text CoinsText;
     public GameObject MenuPanel;
+    public GameObject MainUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +23,7 @@ public class UIManagerScript : MonoBehaviour
         CoinsText.text = "Coins Collected: 0";
         GameOver.text = "Game";
         StartButton.gameObject.SetActive(true);
+        MainUI.SetActive(false);
 
         if (MenuPanel.activeSelf)
         {
@@ -79,6 +81,9 @@ public class UIManagerScript : MonoBehaviour
     {
         MenuPanel.SetActive(!MenuPanel.activeSelf);
         print($"MenuPanel is now: {MenuPanel.activeSelf}");
+
+        MainUI.SetActive(!MainUI.activeSelf);
+        print($"MainUI is now: {MainUI.activeSelf}");
         
         // Pause/unpause the game
         if (MenuPanel.activeSelf)
