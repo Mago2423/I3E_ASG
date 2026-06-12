@@ -12,9 +12,9 @@ public class CollisionDetector : MonoBehaviour
     int score = 0;
     public int health = 100;
 
-    public int ItemsCollected = 0;
+    public int itemsCollected = 0;
 
-    public int CoinsCollected = 0;
+    public int coinsCollected = 0;
 
     GameObject currentCollider;
     
@@ -52,9 +52,9 @@ public class CollisionDetector : MonoBehaviour
                 else
                 {
                     print($"Interacted with {currentCollider.name}");
-                    ItemsCollected += 1;
+                    itemsCollected += 1;
                     Collectible.Collect();
-                    UIManagerScript.ItemCollected(ItemsCollected);
+                    UIManagerScript.ItemCollected(itemsCollected);
                 }
             }
         }
@@ -72,12 +72,12 @@ public class CollisionDetector : MonoBehaviour
                 else
                 {
                     print($"Interacted with {currentCollider.name}");
-                    CoinsCollected += 1;
+                    coinsCollected += 1;
                     score += Collectible.score;
                     print($"Score: {score}");
                     Collectible.Collect();
                     UIManagerScript.UpdateScore(score);
-                    UIManagerScript.CoinsCollected(CoinsCollected);
+                    UIManagerScript.CoinsCollected(coinsCollected);
                 }
             
             }
@@ -86,7 +86,7 @@ public class CollisionDetector : MonoBehaviour
             {
                 if (currentCollider.CompareTag("Locked"))
                 {
-                    if (ItemsCollected >= 10)
+                    if (itemsCollected >= 10)
                     {
                         print("Door is now unlocked!");
                     }

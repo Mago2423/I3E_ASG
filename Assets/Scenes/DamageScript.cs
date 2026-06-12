@@ -24,12 +24,6 @@ public class DamageScript : MonoBehaviour
             print($"Player took {damageAmount} damage");
             player.health -= damageAmount;
             UIManagerScript.UpdateHealth(player.health);
-
-            if (player.health <= 0)
-            {
-                print("Game Over");
-                UIManagerScript.Gameover();
-            }
             time = 100;
         }
     }

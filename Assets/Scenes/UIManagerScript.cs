@@ -44,6 +44,12 @@ public class UIManagerScript : MonoBehaviour
     public void UpdateHealth(int health)
     {
         HealthText.text = $"Health: {health}";
+        if (health <= 0)
+            {   
+                HealthText.text = $"Health: 0";
+                print("Game Over");
+                Gameover();
+            }
     }
 
     public void ItemCollected(int collected)
@@ -58,10 +64,10 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
-    public void CoinsCollected(int CoinsCollected)
+    public void CoinsCollected(int coinsCollected)
     {
-        CoinsText.text = $"Coins Collected: {CoinsCollected}/10";
-        if (CoinsCollected >= 10)
+        CoinsText.text = $"Coins Collected: {coinsCollected}/10";
+        if (coinsCollected >= 10)
         {
             print("You have collected all the coins!");
             GameOver.text = "You have collected all the coins!";
