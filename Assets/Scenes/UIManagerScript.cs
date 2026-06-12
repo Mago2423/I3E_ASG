@@ -12,8 +12,11 @@ public class UIManagerScript : MonoBehaviour
     public Button StartButton;
     public TMP_Text ItemText;
     public TMP_Text CoinsText;
+    public TMP_Text StartText;
+    public TMP_Text TimerText;
     public GameObject MenuPanel;
     public GameObject MainUI;
+    public float elapsedTime = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +25,8 @@ public class UIManagerScript : MonoBehaviour
         ItemText.text = "Items Collected: 0";
         CoinsText.text = "Coins Collected: 0";
         GameOver.text = "Game";
+        StartText.text = "Start";
+        TimerText.text = "Time: 0";
         StartButton.gameObject.SetActive(true);
         MainUI.SetActive(false);
 
@@ -36,6 +41,15 @@ public class UIManagerScript : MonoBehaviour
         
         Cursor.visible = MenuPanel.activeSelf;
         Cursor.lockState = MenuPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    void Update()
+    {
+        if (Time.timeScale > 0)  // Only update if game is running
+        {
+            elapsedTime += Time.deltaTime;
+        }
+        TimerText.text = $"Time: {Mathf.FloorToInt(elapsedTime)}s";
     }
     // Update is called once per frame
     public void UpdateScore(int score)
@@ -59,9 +73,8 @@ public class UIManagerScript : MonoBehaviour
         ItemText.text = $"Items Collected: {collected}/10";
         if (collected >= 10)
         {
-            print("You Win!");
-            GameOver.text = "You Win!";
-            StartButton.gameObject.SetActive(false);
+            print("You have collected all the items!");
+            GameOver.text = "Head to the exit door!";
             TogglePanel();
         }
     }
@@ -114,6 +127,7 @@ public class UIManagerScript : MonoBehaviour
     public void OnStartButtonClick()
     {
         print("Start Button Clicked");
+        StartText.text = "Resume";
         TogglePanel();
     }
 }
