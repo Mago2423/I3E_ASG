@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIManagerScript : MonoBehaviour
 {
+    //the text, buttons, game objects in the UI
     public TMP_Text ScoreText;
     public TMP_Text HealthText;
     public TMP_Text GameOver;
@@ -19,10 +20,11 @@ public class UIManagerScript : MonoBehaviour
     public GameObject JointPlug;
     public GameObject MenuPanel;
     public GameObject MainUI;
-        public float elapsedTime = 0f;
+        public float elapsedTime = 0f; //time spent while the game is running
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //setting all the UI value to thier devualt value and text
         ScoreText.text = "Score: 0";
         HealthText.text = "Health: 100";
         ItemText.text = "Items Collected: 0";
@@ -30,6 +32,7 @@ public class UIManagerScript : MonoBehaviour
         GameOver.text = "Game";
         StartText.text = "Start";
         TimerText.text = "Time: 0";
+        //hiding the panels and buttons
         StartButton.gameObject.SetActive(true);
         MainUI.SetActive(false);
         Injector.SetActive(false);
@@ -44,7 +47,7 @@ public class UIManagerScript : MonoBehaviour
         {
             Time.timeScale = 1f;  // Resume normal speed
         }
-        
+        //when menuepanel is visible, the cursor is visible and if menupanel is not visible, the cursor is locked
         Cursor.visible = MenuPanel.activeSelf;
         Cursor.lockState = MenuPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }
@@ -55,15 +58,15 @@ public class UIManagerScript : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
         }
-        TimerText.text = $"Time: {Mathf.FloorToInt(elapsedTime)}s";
+        TimerText.text = $"Time: {Mathf.FloorToInt(elapsedTime)}s"; //update the UI text every frame to keep track of time elasped
     }
     // Update is called once per frame
     public void UpdateScore(int score)
     {
-        ScoreText.text = $"Score: {score}";
+        ScoreText.text = $"Score: {score}"; //update scoretext with current score
     }
 
-    public void UpdateHealth(int health)
+    public void UpdateHealth(int health) //update healthtext with current health
     {
         HealthText.text = $"Health: {health}";
         if (health <= 0)
@@ -74,7 +77,7 @@ public class UIManagerScript : MonoBehaviour
             }
     }
 
-    public void ItemCollected(int collected)
+    public void ItemCollected(int collected) //toggle panel, congradulates when collected items reach 10 or more
     {
         ItemText.text = $"Items Collected: {collected}/10";
         if (collected >= 10)
@@ -85,7 +88,7 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
-    public void CoinsCollected(int coinsCollected)
+    public void CoinsCollected(int coinsCollected) //toggle panel, congradulates player when collected coins reach 10 or more
     {
         CoinsText.text = $"Coins Collected: {coinsCollected}/10";
         if (coinsCollected >= 10)
@@ -96,7 +99,7 @@ public class UIManagerScript : MonoBehaviour
         }
     }
 
-    public void TogglePanel()
+    public void TogglePanel() //set menupanel and mainUI visible, lock cursor and pause
     {
         MenuPanel.SetActive(!MenuPanel.activeSelf);
         print($"MenuPanel is now: {MenuPanel.activeSelf}");
@@ -118,50 +121,50 @@ public class UIManagerScript : MonoBehaviour
         Cursor.lockState = MenuPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
-    public void Gameover()
+    public void Gameover() //toggle game over screen
     {
-        GameOver.text = "Game Over";
-        StartButton.gameObject.SetActive(false);
-        TogglePanel();
+        GameOver.text = "Game Over"; //change big text to say "game over"
+        StartButton.gameObject.SetActive(false); //remove start button so players cant resume
+        TogglePanel(); //Open panel
     }
 
-    public void Restart()
+    public void Restart() //restart button on click restarts the scene
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void OnStartButtonClick()
+    public void OnStartButtonClick() //start button on click
     {
         print("Start Button Clicked");
-        StartText.text = "Resume";
-        TogglePanel();
+        StartText.text = "Resume"; //change "start" to "resume"
+        TogglePanel(); //closes panel
     }
-    public void InjectorCollected()
+    public void InjectorCollected() //make Icon for injector visible
     {
         print("Injector Obtained");
         Injector.SetActive(true);
     }
-    public void KeyCardCollected()
+    public void KeyCardCollected() //make icon for key card visible
     {
         print("Key Card Obtained");
         KeyCard.SetActive(true);
     }
-    public void JointPlugCollected()
+    public void JointPlugCollected() //make icon for joint plug visible
     {
         print("Joint Plug Obtained");
         JointPlug.SetActive(true);
     }
-    public void InjectorUsed()
+    public void InjectorUsed() //make icon for injector dissapear
     {
         print("Injector Used");
         Injector.SetActive(false);
     }
-    public void KeyCardUsed()
+    public void KeyCardUsed() //make icon for keyCard dissapear
     {
         print("Key Card Used");
         KeyCard.SetActive(false);
     }
-    public void JointPlugUsed()
+    public void JointPlugUsed() //make icon for JointPlug dissapear
     {
         print("Joint Plug Used");
         JointPlug.SetActive(false);

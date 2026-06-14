@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public class Door : MonoBehaviour
 {
-    public Vector3 rotateAmount = new Vector3(0, 90, 0);
-    bool isOpen = false;
-    int time = 1000;
-    bool isColliding = false;
+    public Vector3 rotateAmount = new Vector3(0, 90, 0); //set the amount the door rotates
+    bool isOpen = false; //the bool used in the animation
+    int time = 1000; //time iterval untill door closes by itself
+    bool isColliding = false; //checks if player is colliding with the door
 
 
     void Update()
@@ -17,31 +17,27 @@ public class Door : MonoBehaviour
             if (time <= 0 && !isColliding)
             {
                 print("Closing door");
-                Close();
-                time = 1000;
+                Interact();
+                time = 1000; //1000 frames without coming back into contact to the door, the door closes by itself
             }
         }
     }
-    public int Interact()
+    public int Interact() //playes animation on interact
     {
         var animator = GetComponent<Animator>();
+        var audio = GetComponent<AudioSource>(); //play audio
+        audio.Play();
         isOpen = !isOpen;
         animator.SetBool("IsOpen", isOpen);
         return 0;
     }
-    public int Close()
-    {
-        var animator = GetComponent<Animator>();
-        isOpen = false;
-        animator.SetBool("IsOpen", isOpen);
-        return 0;
-    }
-    void OnCollisionEnter(Collision collision)
+
+    void OnCollisionEnter(Collision collision) //checks if colliding with door
     {
         print($"Collided with {collision.gameObject.name}");
         isColliding = true;
     }
-    void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision) //checks if stop colliding with door
     {
         isColliding = false;
         print($"Stopped colliding with {collision.gameObject.name}");
