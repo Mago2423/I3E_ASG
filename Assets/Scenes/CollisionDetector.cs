@@ -51,17 +51,6 @@ public class CollisionDetector : MonoBehaviour
     {
         UIManagerScript.TogglePanel(); //toggle panel - pause screen
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        currentCollider = collision.gameObject;
-        print($"Collided with {currentCollider.name}"); // check in console
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        print($"Stopped colliding with {currentCollider.name}"); // check in console
-        currentCollider = null;
-    }
 
     void OnInteract(InputValue value) // code for interace - E
     {
@@ -173,7 +162,8 @@ public class CollisionDetector : MonoBehaviour
                 {
                     print($"Already collected {currentCollider.name}");
                 }
-                else
+                var Door = hitObject.GetComponent<Door>();
+                if (Door != null)
                 {
                     print($"Interacted with {currentCollider.name}");
                     coinsCollected += 1; //increase coinscollected by 1
@@ -185,6 +175,10 @@ public class CollisionDetector : MonoBehaviour
                 }
             
             }
+        }
+        else
+        {
+            print("Nothing in range to interact with");
         }
     }
 
