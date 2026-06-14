@@ -39,10 +39,7 @@ public class CollisionDetector : MonoBehaviour
     /// checks for whether the player has picked up the JointPlug
     /// </summary>
     public bool HaveJointPlug = false; 
-    /// <summary>
-    /// checks for whether the power is on
-    /// </summary>
-    public bool HavePower = false;
+
 
     GameObject currentCollider;
     
@@ -84,34 +81,20 @@ public class CollisionDetector : MonoBehaviour
                     return; // Exit the method to prevent interaction with the door
                 }
             }
-            else if (currentCollider.CompareTag("Power")) //checks for "unlocked" Tag
+            else if (currentCollider.CompareTag("Power")) //checks for "power" Tag
             {
-                if (HavePower == true) // if Have key card the door is unlocked
+                if (HaveJointPlug == true) // if Have key card the door is unlocked
                 {
                     print("Door is now unlocked!");
                 }
                 else
                 {
                     print("Door is locked. On the generator"); //No keycard, its locked
-                    UIManagerScript.GeneratorDoorPanel();
-                    return; // Exit the method to prevent interaction with the door
-                }
-            }
-            else if (currentCollider.CompareTag("Generator")) //checks for "unlocked" Tag
-            {
-                if (HaveJointPlug == true) // if Have key card the door is unlocked
-                {
-                    print("Door is now unlocked!");
-                    UIManagerScript.JointPlugUsed();
-                    HavePower = true;
-                }
-                else
-                {
-                    print("Door is locked. Find the Keycard to unlock."); //No keycard, its locked
                     UIManagerScript.GeneratorPanel();
                     return; // Exit the method to prevent interaction with the door
                 }
             }
+
             else if (currentCollider.CompareTag("Unlocked")) //checks for "unlocked" Tag
             {
                 print($"Interacted with {currentCollider.name}");
