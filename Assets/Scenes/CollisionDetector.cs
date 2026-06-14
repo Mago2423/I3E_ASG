@@ -65,6 +65,10 @@ public class CollisionDetector : MonoBehaviour
 
     void OnInteract(InputValue value) // code for interace - E
     {
+        if (currentCollider == null)
+        {
+            return;
+        }
         print("Interacted"); // check in console
         var Collectible = currentCollider.GetComponent<Collectible>();
         var collider = currentCollider.GetComponent<Collider>();
@@ -76,6 +80,7 @@ public class CollisionDetector : MonoBehaviour
                 if (HaveKeyCard == true) // if Have key card the door is unlocked
                 {
                     print("Door is now unlocked!");
+                    Door.Interact();
                 }
                 else
                 {
@@ -86,9 +91,10 @@ public class CollisionDetector : MonoBehaviour
             }
             else if (currentCollider.CompareTag("Power")) //checks for "power" Tag
             {
-                if (HavePower == true) // if Have key card the door is unlocked
+                if (HavePower == true) // if Have generator on the door is unlocked
                 {
                     print("Door is now unlocked!");
+                    Door.Interact();
                 }
                 else
                 {
@@ -97,7 +103,14 @@ public class CollisionDetector : MonoBehaviour
                     return; // Exit the method to prevent interaction with the door
                 }
             }
-            else if (currentCollider.CompareTag("Generator")) //checks for "generator" Tag
+            else if (currentCollider.CompareTag("Unlocked")) //checks for "unlocked" Tag
+            {
+                print($"Interacted with {currentCollider.name}");
+                Door.Interact(); //open or close the door using animation
+                return;
+            }
+        }
+        else if (currentCollider.CompareTag("Generator")) //checks for "generator" Tag
             {
                 if (HaveJointPlug == true) // if Have key card the door is unlocked
                 {
@@ -112,13 +125,6 @@ public class CollisionDetector : MonoBehaviour
                     return; // Exit the method to prevent interaction with the door
                 }
             }
-            else if (currentCollider.CompareTag("Unlocked")) //checks for "unlocked" Tag
-            {
-                print($"Interacted with {currentCollider.name}");
-                Door.Interact(); //open or close the door using animation
-                return;
-            }
-        }
         else if (currentCollider != null && currentCollider.CompareTag("Item")) //checks for the tag "item"
         {
             if (Collectible != null)
