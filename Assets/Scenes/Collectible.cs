@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    public int score = 1; //custimisable in unity to set how much score each collectable gives
+    /// <summary>
+    /// custimisable in unity to set how much score each collectable gives
+    /// </summary>
+    public int score = 1; 
     public void Collect()
     {
         var audio = GetComponent<AudioSource>(); //play audio

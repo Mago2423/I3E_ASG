@@ -11,14 +11,38 @@ public class CollisionDetector : MonoBehaviour
     /// Increment score by this value when a coin is collected.
     /// </summary>
     int score = 0;  //unity overights this value
-    public int health = 100; //player health
-
-    public int itemsCollected = 0;//keeps track of items collected
-
-    public int coinsCollected = 0; // keeps track of coins collected
-    public int healAmount = 20; //the amount healed from using the injector
-
-    public bool HaveInjector = false; // checks for whether the player has picked up the injector
+    /// <summary>
+    /// Player Health
+    /// </summary>
+    public int health = 100; 
+    /// <summary>
+    /// keeps track of items collected
+    /// </summary>
+    public int itemsCollected = 0;
+    /// <summary>
+    ///  keeps track of coins collected
+    /// </summary>
+    public int coinsCollected = 0; 
+    /// <summary>
+    ///  the amount healed from using the injector
+    /// </summary>
+    public int healAmount = 20; 
+    /// <summary>
+    /// checks for whether the player has picked up the injector
+    /// </summary>
+    public bool HaveInjector = false; 
+    /// <summary>
+    /// checks for whether the player has picked up the KeyCard
+    /// </summary>
+    public bool HaveKeyCard = false; 
+    /// <summary>
+    /// checks for whether the player has picked up the JointPlug
+    /// </summary>
+    public bool HaveJointPlug = false; 
+    /// <summary>
+    /// checks for whether the power is on
+    /// </summary>
+    public bool HavePower = false;
 
     GameObject currentCollider;
     
@@ -49,13 +73,42 @@ public class CollisionDetector : MonoBehaviour
         {
             if (currentCollider.CompareTag("Locked")) //checks for "locked" Tag
             {
-                if (itemsCollected >= 10) // if itemcollected is at least 10 the door is unlocked
+                if (HaveKeyCard == true) // if Have key card the door is unlocked
                 {
                     print("Door is now unlocked!");
                 }
                 else
                 {
-                    print("Door is locked. Collect all items to unlock."); //itemcollected less than 10, its locked
+                    print("Door is locked. Find the Keycard to unlock."); //No keycard, its locked
+                    UIManagerScript.KeyCardPanel();
+                    return; // Exit the method to prevent interaction with the door
+                }
+            }
+            else if (currentCollider.CompareTag("Power")) //checks for "unlocked" Tag
+            {
+                if (HavePower == true) // if Have key card the door is unlocked
+                {
+                    print("Door is now unlocked!");
+                }
+                else
+                {
+                    print("Door is locked. On the generator"); //No keycard, its locked
+                    UIManagerScript.GeneratorDoorPanel();
+                    return; // Exit the method to prevent interaction with the door
+                }
+            }
+            else if (currentCollider.CompareTag("Generator")) //checks for "unlocked" Tag
+            {
+                if (HaveJointPlug == true) // if Have key card the door is unlocked
+                {
+                    print("Door is now unlocked!");
+                    UIManagerScript.JointPlugUsed();
+                    HavePower = true;
+                }
+                else
+                {
+                    print("Door is locked. Find the Keycard to unlock."); //No keycard, its locked
+                    UIManagerScript.GeneratorPanel();
                     return; // Exit the method to prevent interaction with the door
                 }
             }
@@ -85,7 +138,7 @@ public class CollisionDetector : MonoBehaviour
         }
         else if (currentCollider.CompareTag("Injector")) //checks for injector tag - healing item
         {
-            HaveInjector = true; // checks if player has injector
+            HaveInjector = true; // player has injector
             UIManagerScript.InjectorCollected();
             if (Collectible != null)
             {
@@ -94,6 +147,7 @@ public class CollisionDetector : MonoBehaviour
         }
         else if (currentCollider.CompareTag("KeyCard")) //checks for keycard tag
         {
+            HaveKeyCard = true;
             UIManagerScript.KeyCardCollected();
             if (Collectible != null)
             {
@@ -102,6 +156,7 @@ public class CollisionDetector : MonoBehaviour
         }
         else if (currentCollider.CompareTag("JointPlug")) //checks for jointPlug tag
         {
+            HaveJointPlug = true;
             UIManagerScript.JointPlugCollected();
             if (Collectible != null)
             {

@@ -13,6 +13,8 @@ TagManager:
   - KeyCard
   - JointPlug
   - Unlocked
+  - Generator
+  - Power
   layers:
   - Default
   - TransparentFX

@@ -85,9 +85,33 @@ public class UIManagerScript : MonoBehaviour
         if (collected >= 10)
         {
             print("You have collected all the items!");
-            GameOver.text = "Head to the exit door!";
+            GameOver.text = "You Have collected all the Joint Plugs, On the Generator";
             TogglePanel();
         }
+    }
+
+    public void KeyCardPanel() //toggle panel, Tell player they need a key card
+    {
+
+        print("You Need a Key card");
+        GameOver.text = "You Need a Key Card";
+        TogglePanel();
+    }
+
+    public void GeneratorPanel() //toggle panel, Tell player they need a Joint plug
+    {
+
+        print("you need a joint plug");
+        GameOver.text = "You Need a joint Plug";
+        TogglePanel();
+    }
+
+    public void GeneratorDoorPanel() //toggle panel, Tell player they need to on the generator
+    {
+
+        print("you need to on the Generator");
+        GameOver.text = "You Need to On the Generator";
+        TogglePanel();
     }
 
     public void CoinsCollected(int coinsCollected) //toggle panel, congradulates player when collected coins reach 10 or more
@@ -160,11 +184,6 @@ public class UIManagerScript : MonoBehaviour
     {
         print("Injector Used");
         Injector.SetActive(false);
-    }
-    public void KeyCardUsed() //make icon for keyCard dissapear
-    {
-        print("Key Card Used");
-        KeyCard.SetActive(false);
     }
     public void JointPlugUsed() //make icon for JointPlug dissapear
     {
