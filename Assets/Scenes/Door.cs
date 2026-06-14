@@ -1,3 +1,6 @@
+//* Author: Lee wei jun
+//* Date: 14/6/2026
+//* Description: The door script responsible for activating the animations of the door so that it can open and close
 using UnityEngine;
 using UnityEngine.UIElements;
 public class Door : MonoBehaviour

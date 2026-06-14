@@ -1,3 +1,6 @@
+//* Author: Lee wei jun
+//* Date: 14/6/2026
+//* Description: The script for any of the collectables to call thier audio and animation, allows score gained to be customisable
 using UnityEngine;
 
 public class Collectible : MonoBehaviour

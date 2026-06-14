@@ -1,4 +1,6 @@
-using System;
+//* Author: Lee wei jun
+//* Date: 14/6/2026
+//* Description: The UI ManagerScript that is responsible for the visibility of the in game UI and manages updating the value of varius variables
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;

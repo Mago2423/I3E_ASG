@@ -12,6 +12,7 @@ TagManager:
   - Injector
   - KeyCard
   - JointPlug
+  - Unlocked
   layers:
   - Default
   - TransparentFX

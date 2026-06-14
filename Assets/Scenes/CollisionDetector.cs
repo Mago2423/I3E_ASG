@@ -1,3 +1,6 @@
+//* Author: Lee wei jun
+//* Date: 14/6/2026
+//* Description: the player script that is responsible for Collision detection and additional player inputs
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -56,7 +59,7 @@ public class CollisionDetector : MonoBehaviour
                     return; // Exit the method to prevent interaction with the door
                 }
             }
-            else
+            else if (currentCollider.CompareTag("Unlocked")) //checks for "unlocked" Tag
             {
                 print($"Interacted with {currentCollider.name}");
                 Door.Interact(); //open or close the door using animation
