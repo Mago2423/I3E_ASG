@@ -14,9 +14,12 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text CoinsText;
     public TMP_Text StartText;
     public TMP_Text TimerText;
+    public GameObject Injector;
+    public GameObject KeyCard;
+    public GameObject JointPlug;
     public GameObject MenuPanel;
     public GameObject MainUI;
-    public float elapsedTime = 0f;
+        public float elapsedTime = 0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,6 +32,9 @@ public class UIManagerScript : MonoBehaviour
         TimerText.text = "Time: 0";
         StartButton.gameObject.SetActive(true);
         MainUI.SetActive(false);
+        Injector.SetActive(false);
+        KeyCard.SetActive(false);
+        JointPlug.SetActive(false);
 
         if (MenuPanel.activeSelf)
         {
@@ -129,5 +135,35 @@ public class UIManagerScript : MonoBehaviour
         print("Start Button Clicked");
         StartText.text = "Resume";
         TogglePanel();
+    }
+    public void InjectorCollected()
+    {
+        print("Injector Obtained");
+        Injector.SetActive(true);
+    }
+    public void KeyCardCollected()
+    {
+        print("Key Card Obtained");
+        KeyCard.SetActive(true);
+    }
+    public void JointPlugCollected()
+    {
+        print("Joint Plug Obtained");
+        JointPlug.SetActive(true);
+    }
+    public void InjectorUsed()
+    {
+        print("Injector Used");
+        Injector.SetActive(false);
+    }
+    public void KeyCardUsed()
+    {
+        print("Key Card Used");
+        KeyCard.SetActive(false);
+    }
+    public void JointPlugUsed()
+    {
+        print("Joint Plug Used");
+        JointPlug.SetActive(false);
     }
 }

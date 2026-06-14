@@ -15,10 +15,12 @@ public class CollisionDetector : MonoBehaviour
     public int itemsCollected = 0;
 
     public int coinsCollected = 0;
+    public int healAmount = 20;
+
+    public bool HaveInjector = false;
 
     GameObject currentCollider;
     
-    bool isMenuShowing = false;
     public UIManagerScript UIManagerScript;
     void OnMenu()
     {
@@ -38,13 +40,17 @@ public class CollisionDetector : MonoBehaviour
 
     void OnInteract(InputValue value)
     {
+        if (currentCollider == null)
+        {
+            return;
+        }
         print("Interacted");
+        var Collectible = currentCollider.GetComponent<Collectible>();
+        var collider = Collectible.GetComponent<Collider>();
         if (currentCollider != null && currentCollider.CompareTag("Item"))
         {
-            var Collectible = currentCollider.GetComponent<Collectible>();
             if (Collectible != null)
             {
-                var collider = Collectible.GetComponent<Collider>();
                 if(collider != null && !collider.enabled)
                 {
                     print($"Already collected {currentCollider.name}");
@@ -58,13 +64,37 @@ public class CollisionDetector : MonoBehaviour
                 }
             }
         }
+        else if (currentCollider.CompareTag("Injector"))
+        {
+            HaveInjector = true;
+            UIManagerScript.InjectorCollected();
+            if (Collectible != null)
+            {
+                Collectible.Collect();
+            }
+        }
+        else if (currentCollider.CompareTag("KeyCard"))
+        {
+            UIManagerScript.KeyCardCollected();
+            if (Collectible != null)
+            {
+                Collectible.Collect();
+            }
+        }
+        else if (currentCollider.CompareTag("JointPlug"))
+        {
+            UIManagerScript.JointPlugCollected();
+            if (Collectible != null)
+            {
+                Collectible.Collect();
+            }
+        }
+
         else if (currentCollider != null)
         {
             print($"Interacted with {currentCollider.name}");
-            var Collectible = currentCollider.GetComponent<Collectible>();
             if (Collectible != null)
             {   
-                var collider = Collectible.GetComponent<Collider>();
                 if(collider != null && !collider.enabled)
                 {
                     print($"Already collected {currentCollider.name}");
@@ -105,6 +135,18 @@ public class CollisionDetector : MonoBehaviour
         }
     }
 
+    void OnHeal(InputValue value)
+    {
+        if (HaveInjector == true)
+        {
+            print($"Healed for {healAmount} health");
+            health += healAmount;
+            if (health > 100) health = 100;
+            UIManagerScript.UpdateHealth(health);
+            UIManagerScript.InjectorUsed();
+            HaveInjector = false;
+        }
+    }
 
 
 }

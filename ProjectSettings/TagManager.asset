@@ -9,6 +9,9 @@ TagManager:
   - Flag
   - Item
   - Locked
+  - Injector
+  - KeyCard
+  - JointPlug
   layers:
   - Default
   - TransparentFX
