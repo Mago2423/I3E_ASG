@@ -112,6 +112,14 @@ public class UIManagerScript : MonoBehaviour
         ToggleAlert();
     }
 
+    public void GeneratorDoorPanel() //toggle panel, Tell player they need to on the generator
+    {
+
+        print("you need to on the Generator");
+        AlertText.text = "You Need to On the Generator";
+        ToggleAlert();
+    }
+
     public void CoinsCollected(int coinsCollected) //toggle panel, congradulates player when collected coins reach 10 or more
     {
         CoinsText.text = $"Coins Collected: {coinsCollected}/10";
