@@ -9,6 +9,12 @@ TagManager:
   - Flag
   - Item
   - Locked
+  - Injector
+  - KeyCard
+  - JointPlug
+  - Unlocked
+  - Generator
+  - Power
   layers:
   - Default
   - TransparentFX

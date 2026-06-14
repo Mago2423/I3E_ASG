@@ -1,3 +1,6 @@
+//* Author: Lee wei jun
+//* Date: 14/6/2026
+//* Description: The Damage script for any object that deals damage, damage is adjestable and playes taking damage audio
 using UnityEngine;
 
 public class DamageScript : MonoBehaviour
@@ -5,13 +8,13 @@ public class DamageScript : MonoBehaviour
     public int damageAmount = 10;
     int time = 100;
     CollisionDetector player;
-    bool isColliding = false;
+    bool isTriggered = false;
     public UIManagerScript UIManagerScript;
 
 
-    void OnCollisionStay(Collision collision)
+    void OnTriggerStay(Collider collision)
     {
-        if (!isColliding) return;
+        if (!isTriggered) return;
         
         player = collision.gameObject.GetComponent<CollisionDetector>();
         if (player == null) return;
@@ -29,18 +32,23 @@ public class DamageScript : MonoBehaviour
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
-        isColliding = true;
+        isTriggered = true;
         player = collision.gameObject.GetComponent<CollisionDetector>();
+        if (player == null)
+        {
+            return;
+        }
         var audio = GetComponent<AudioSource>();
         audio.Play();
         print($"Player took {damageAmount} damage");
         player.health -= damageAmount;
         UIManagerScript.UpdateHealth(player.health);
     }
-    void OnCollisionExit(Collision collision)
+    void OnTriggerExit(Collider collision)
     {
-        isColliding = false;
+        isTriggered = false;
     }
 }
+
