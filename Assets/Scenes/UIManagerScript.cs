@@ -3,6 +3,7 @@
 //* Description: The UI ManagerScript that is responsible for the visibility of the in game UI and manages updating the value of varius variables
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,11 +18,13 @@ public class UIManagerScript : MonoBehaviour
     public TMP_Text CoinsText;
     public TMP_Text StartText;
     public TMP_Text TimerText;
+    public TMP_Text AlertText;
     public GameObject Injector;
     public GameObject KeyCard;
     public GameObject JointPlug;
     public GameObject MenuPanel;
     public GameObject MainUI;
+    public GameObject AlertPanel;
         public float elapsedTime = 0f; //time spent while the game is running
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,12 +37,14 @@ public class UIManagerScript : MonoBehaviour
         GameOver.text = "Game";
         StartText.text = "Start";
         TimerText.text = "Time: 0";
+        AlertText.text = "Alert";
         //hiding the panels and buttons
         StartButton.gameObject.SetActive(true);
         MainUI.SetActive(false);
         Injector.SetActive(false);
         KeyCard.SetActive(false);
         JointPlug.SetActive(false);
+        AlertPanel.SetActive(false);
 
         if (MenuPanel.activeSelf)
         {
@@ -85,7 +90,7 @@ public class UIManagerScript : MonoBehaviour
         if (collected >= 10)
         {
             print("You have collected all the items!");
-            GameOver.text = "You Have collected all the Joint Plugs, On the Generator";
+            AlertText.text = "You Have collected all the Joint Plugs, On the Generator";
             TogglePanel();
         }
     }
@@ -94,24 +99,25 @@ public class UIManagerScript : MonoBehaviour
     {
 
         print("You Need a Key card");
-        GameOver.text = "You Need a Key Card";
-        TogglePanel();
+        AlertText.text = "You Need a Key Card";
+        StartText.text = "Resume";
+        ToggleAlert();
     }
 
     public void GeneratorPanel() //toggle panel, Tell player they need a Joint plug
     {
 
         print("you need a joint plug");
-        GameOver.text = "You Need a joint Plug";
-        TogglePanel();
+        AlertText.text = "You Need a joint Plug";
+        ToggleAlert();
     }
 
     public void GeneratorDoorPanel() //toggle panel, Tell player they need to on the generator
     {
 
         print("you need to on the Generator");
-        GameOver.text = "You Need to On the Generator";
-        TogglePanel();
+        AlertText.text = "You Need to On the Generator";
+        ToggleAlert();
     }
 
     public void CoinsCollected(int coinsCollected) //toggle panel, congradulates player when collected coins reach 10 or more
@@ -120,8 +126,8 @@ public class UIManagerScript : MonoBehaviour
         if (coinsCollected >= 10)
         {
             print("You have collected all the coins!");
-            GameOver.text = "You have collected all the coins!";
-            TogglePanel();
+            AlertText.text = "You have collected all the coins!";
+            ToggleAlert();
         }
     }
 
@@ -147,6 +153,25 @@ public class UIManagerScript : MonoBehaviour
         Cursor.lockState = MenuPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
+    public void ToggleAlert() //set Alert panel and start button visible, lock cursor and pause
+    {
+        AlertPanel.SetActive(!AlertPanel.activeSelf);
+        print($"AlertPanel is now: {AlertPanel.activeSelf}");
+        StartButton.gameObject.SetActive(true);
+        // Pause/unpause the game
+        if (AlertPanel.activeSelf)
+        {
+            Time.timeScale = 0f;  // Pause everything
+        }
+        else
+        {
+            Time.timeScale = 1f;  // Resume normal speed
+        }
+        
+        Cursor.visible = AlertPanel.activeSelf;
+        Cursor.lockState = AlertPanel.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
     public void Gameover() //toggle game over screen
     {
         GameOver.text = "Game Over"; //change big text to say "game over"
@@ -164,6 +189,7 @@ public class UIManagerScript : MonoBehaviour
         print("Start Button Clicked");
         StartText.text = "Resume"; //change "start" to "resume"
         TogglePanel(); //closes panel
+        AlertPanel.SetActive(false);
     }
     public void InjectorCollected() //make Icon for injector visible
     {

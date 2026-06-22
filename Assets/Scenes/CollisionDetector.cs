@@ -51,9 +51,24 @@ public class CollisionDetector : MonoBehaviour
     {
         UIManagerScript.TogglePanel(); //toggle panel - pause screen
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        currentCollider = collision.gameObject;
+        print($"Collided with {currentCollider.name}"); // check in console
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        print($"Stopped colliding with {currentCollider.name}"); // check in console
+        currentCollider = null;
+    }
 
     void OnInteract(InputValue value) // code for interace - E
     {
+        if (currentCollider == null)
+        {
+            return;
+        }
         print("Interacted"); // check in console
         var Collectible = currentCollider.GetComponent<Collectible>();
         var collider = currentCollider.GetComponent<Collider>();
@@ -65,6 +80,7 @@ public class CollisionDetector : MonoBehaviour
                 if (HaveKeyCard == true) // if Have key card the door is unlocked
                 {
                     print("Door is now unlocked!");
+                    Door.Interact();
                 }
                 else
                 {
@@ -73,31 +89,17 @@ public class CollisionDetector : MonoBehaviour
                     return; // Exit the method to prevent interaction with the door
                 }
             }
-            else if (currentCollider.CompareTag("Power")) //checks for "unlocked" Tag
+            else if (currentCollider.CompareTag("Power")) //checks for "power" Tag
             {
-                if (HavePower == true) // if Have key card the door is unlocked
+                if (HavePower == true) // if Have generator on the door is unlocked
                 {
                     print("Door is now unlocked!");
+                    Door.Interact();
                 }
                 else
                 {
                     print("Door is locked. On the generator"); //No keycard, its locked
                     UIManagerScript.GeneratorDoorPanel();
-                    return; // Exit the method to prevent interaction with the door
-                }
-            }
-            else if (currentCollider.CompareTag("Generator")) //checks for "unlocked" Tag
-            {
-                if (HaveJointPlug == true) // if Have key card the door is unlocked
-                {
-                    print("Door is now unlocked!");
-                    UIManagerScript.JointPlugUsed();
-                    HavePower = true;
-                }
-                else
-                {
-                    print("Door is locked. Find the Keycard to unlock."); //No keycard, its locked
-                    UIManagerScript.GeneratorPanel();
                     return; // Exit the method to prevent interaction with the door
                 }
             }
@@ -108,6 +110,21 @@ public class CollisionDetector : MonoBehaviour
                 return;
             }
         }
+        else if (currentCollider.CompareTag("Generator")) //checks for "generator" Tag
+            {
+                if (HaveJointPlug == true) // if Have key card the door is unlocked
+                {
+                    print("Power is now on!");
+                    UIManagerScript.JointPlugUsed();
+                    HavePower = true;
+                }
+                else
+                {
+                    print("Door is locked. Find the Keycard to unlock."); //No keycard, its locked
+                    UIManagerScript.GeneratorPanel();
+                    return; // Exit the method to prevent interaction with the door
+                }
+            }
         else if (currentCollider != null && currentCollider.CompareTag("Item")) //checks for the tag "item"
         {
             if (Collectible != null)
@@ -162,8 +179,7 @@ public class CollisionDetector : MonoBehaviour
                 {
                     print($"Already collected {currentCollider.name}");
                 }
-                var Door = hitObject.GetComponent<Door>();
-                if (Door != null)
+                else
                 {
                     print($"Interacted with {currentCollider.name}");
                     coinsCollected += 1; //increase coinscollected by 1
@@ -175,10 +191,6 @@ public class CollisionDetector : MonoBehaviour
                 }
             
             }
-        }
-        else
-        {
-            print("Nothing in range to interact with");
         }
     }
 
