@@ -47,6 +47,8 @@ public class CollisionDetector : MonoBehaviour
     GameObject currentCollider;
     
     public UIManagerScript UIManagerScript;
+    public CoinSpawner coinSpawner;
+
     void OnMenu()
     {
         UIManagerScript.TogglePanel(); //toggle panel - pause screen
@@ -69,10 +71,27 @@ public class CollisionDetector : MonoBehaviour
         {
             return;
         }
+
         print("Interacted"); // check in console
         var Collectible = currentCollider.GetComponent<Collectible>();
         var collider = currentCollider.GetComponent<Collider>();
         var Door = currentCollider.GetComponent<Door>();
+        var coinSpawner = currentCollider.GetComponent<CoinSpawner>();
+
+        if (coinSpawner != null)
+        {
+            coinSpawner.Interactcube();
+            return;
+        }
+
+        var ball = currentCollider.GetComponent<Ball>();
+
+        if (ball != null)
+        {
+            ball.MoveBall();
+            return;
+        }
+        
         if (Door != null)
         {
             if (currentCollider.CompareTag("Locked")) //checks for "locked" Tag
